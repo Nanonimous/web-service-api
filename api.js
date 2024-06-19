@@ -736,6 +736,7 @@ db4.connect();
 
 //delete links
 app.post("/delete_link", async (req, res) => {
+    try{
 
     const department=req.body.dept; 
     const subject=req.body.sub;
@@ -775,7 +776,10 @@ app.post("/delete_link", async (req, res) => {
         await db2.query(`delete FROM links WHERE link_title=$1 AND topic_key=$2`, [link_title,topicKey]);
         res.json("delete document successfully");
     }
-
+    }catch(err){
+        console.error('Error fetching department data:', err);
+        res.status(500).send('Internal Server Error');
+    }
      
 });
 
